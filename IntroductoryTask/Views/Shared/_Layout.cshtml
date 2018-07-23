@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,9 +10,30 @@
     <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
 </head>
 <body>
-    @RenderBody()
+	<script>
+		window.fbAsyncInit = function () {
+			FB.init({
+				appId: '253460525433755',
+				cookie: true,
+				xfbml: true,
+				version: 'v3.0'
+			});
 
-    <script src="~/dist/vendor.js" asp-append-version="true"></script>
-    @RenderSection("scripts", required: false)
+			FB.AppEvents.logPageView();
+		};
+
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) { return; }
+			js = d.createElement(s); js.id = id;
+			js.src = "https://connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+	@RenderBody()
+
+	<script src="~/dist/vendor.js" asp-append-version="true"></script>
+	@RenderSection("scripts", required: false)
 </body>
 </html>
