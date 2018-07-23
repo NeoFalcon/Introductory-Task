@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using IntroductoryTask.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntroductoryTask.Data
 {
