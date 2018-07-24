@@ -25,9 +25,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\SubmitPayment.tsx" />
+    <None Remove="ClientApp\store\Payment.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\SubmitPayment.tsx" />
+    <TypeScriptCompile Include="ClientApp\store\Payment.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

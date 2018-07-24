@@ -23,10 +23,10 @@
 
 			handleFacebookLogin = function (response) {
 				if (response.status === 'connected') {
-					if (location.pathname !== '/payment') {
+					if (location.pathname !== '/submitpayment') {
 						var splashScreen = document.getElementById('splash-screen');
 						splashScreen.style.display = 'block';
-						location.href = '/payment';
+						location.href = '/submitpayment';
 					}
 				}
 				else if (location.pathname !== '/') {
