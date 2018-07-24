@@ -13,13 +13,29 @@
 	<script>
 		window.fbAsyncInit = function () {
 			FB.init({
-				appId: '253460525433755',
+				appId: '445266695882469',
 				cookie: true,
 				xfbml: true,
 				version: 'v3.0'
 			});
 
 			FB.AppEvents.logPageView();
+
+			handleFacebookLogin = function (response) {
+				if (response.status === 'connected') {
+					if (location.pathname !== '/payment') {
+						var splashScreen = document.getElementById('splash-screen');
+						splashScreen.style.display = 'block';
+						location.href = '/payment';
+					}
+				}
+				else if (location.pathname !== '/') {
+					location.href = '/';
+				}
+			};
+
+			FB.Event.subscribe('auth.authResponseChange', handleFacebookLogin);
+			FB.getLoginStatus(handleFacebookLogin);
 		};
 
 		(function (d, s, id) {
@@ -30,6 +46,14 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
+	<div id="splash-screen" style="display: none;">
+		<h1>
+			Simple Payment Web App
+		</h1>
+		<h2>
+			loading...
+		</h2>
+	</div>
 
 	@RenderBody()
 
