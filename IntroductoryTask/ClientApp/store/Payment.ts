@@ -2,11 +2,23 @@
 import { RouterAction, push, routerActions } from "react-router-redux";
 import { AppThunkAction } from "ClientApp/store";
 import { Action, Reducer } from "redux";
+require("https://bridge.paymill.com/");
 
 export interface Payment {
+	cardNumberHasErrors: boolean;
+	cardNumberErrorMessage: string;
 	cardNumber: string;
+	nameOnCardHasErrors: boolean;
+	nameOnCardErrorMessage: string;
 	nameOnCard: string;
-	expiryDate: string;
+	expiryMonthHasErrors: boolean;
+	expiryMonthErrorMessage: string;
+	expiryMonth: string;
+	expiryYearHasErrors: boolean;
+	expiryYearErrorMessage: string;
+	expiryYear: string;
+	securityCodeHasErrors: boolean;
+	securityCodeErrorMessage: string;
 	securityCode: string;
 }
 
@@ -14,6 +26,7 @@ export interface PaymentState {
 	isLoading: boolean;
 	payment: Payment;
 	validationErrorMessage?: string;
+	hasPaymentSucceeded: boolean;
 }
 
 interface SubmitPaymentAction {
@@ -23,6 +36,7 @@ interface SubmitPaymentAction {
 
 interface ReceiveGenericResultAction {
 	type: 'RECEIVE_GENERIC_RESULT';
+	successMessage: string;
 }
 
 interface ValidationErrorAction {
@@ -34,8 +48,9 @@ type KnownAction = SubmitPaymentAction | ReceiveGenericResultAction | Validation
 
 export const actionCreators = {
 	submitPayment: (payment: Payment): AppThunkAction<any> => (dispatch, getState) => {
-		var apiMethodUrl = `api/Person/Add`;
+		var apiMethodUrl = `api/SubmitPayment/Save`;
 		var apiMethodType = `post`;
+		paymill.
 		let fetchTask = fetch(apiMethodUrl, {
 			method: apiMethodType,
 			headers: {
@@ -50,7 +65,6 @@ export const actionCreators = {
 			}
 			else {
 				dispatch({ type: 'RECEIVE_GENERIC_RESULT' });
-				dispatch(push(`/fetchpeople`));
 			}
 		});
 
@@ -59,8 +73,14 @@ export const actionCreators = {
 	}
 };
 
-const emptyPayment: Payment = { cardNumber: '', nameOnCard: '', expiryDate: '', securityCode: '' }
-const unloadedState: PaymentState = { isLoading: false, payment: emptyPayment };
+const emptyPayment: Payment = {
+	cardNumberHasErrors: false, cardNumberErrorMessage: '', cardNumber: '',
+	nameOnCardHasErrors: false, nameOnCardErrorMessage: '', nameOnCard: '',
+	expiryMonthHasErrors: false, expiryMonthErrorMessage: '', expiryMonth: '',
+	expiryYearHasErrors: false, expiryYearErrorMessage: '', expiryYear: '',
+	securityCodeHasErrors: false, securityCodeErrorMessage: '', securityCode: ''
+}
+const unloadedState: PaymentState = { isLoading: false, payment: emptyPayment, hasPaymentSucceeded: false };
 
 export const reducer: Reducer<PaymentState> = (state: PaymentState, incomingAction: Action) => {
 	const action = incomingAction as KnownAction;
@@ -68,19 +88,22 @@ export const reducer: Reducer<PaymentState> = (state: PaymentState, incomingActi
 		case 'SUBMIT_PAYMENT':
 			return {
 				payment: action.payment,
-				isLoading: true
+				isLoading: true,
+				hasPaymentSucceeded: false
 			};
 		case 'RECEIVE_GENERIC_RESULT':
 			return {
 				payment: emptyPayment,
 				isLoading: false,
-				validationErrorMessage: undefined
+				validationErrorMessage: undefined,
+				hasPaymentSucceeded: true
 			};
 		case 'VALIDATION_ERROR':
 			return {
 				payment: state.payment,
 				isLoading: false,
-				validationErrorMessage: action.errorMessage
+				validationErrorMessage: action.errorMessage,
+				hasPaymentSucceeded: false
 			}
 		default:
 			const exhaustiveCheck: never = action;
