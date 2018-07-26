@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
 </head>
 <body>
+	<script src="https://bridge.paymill.com/"></script>
 	<script>
 		window.fbAsyncInit = function () {
 			FB.init({
@@ -45,8 +46,9 @@
 			js.src = "https://connect.facebook.net/en_US/sdk.js";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
+
+		PAYMILL_PUBLIC_KEY = "447027744769e040fce42c906af1f726";
 	</script>
-	<script src="https://bridge.paymill.com/" asp-append-version="true"></script>
 	<div id="splash-screen" style="display: none;">
 		<h1>
 			Simple Payment Web App

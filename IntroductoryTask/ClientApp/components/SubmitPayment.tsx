@@ -141,7 +141,7 @@ class SubmitPayment extends React.Component<PaymentProps, {}> {
 			|| this.props.payment.securityCodeHasErrors;
 
 		var successAlert = this.props.hasPaymentSucceeded
-			? <div className="alert alert-success alert-dismissible fade show" role="alert">
+			? <div className="alert alert-success alert-dismissible" role="alert">
 				Payment of 1 euro succeeded
 				<button type="button" className="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -152,7 +152,7 @@ class SubmitPayment extends React.Component<PaymentProps, {}> {
 		return <div>
 			{ successAlert }
 			<span style={{ color: "red" }}>{this.props.validationErrorMessage}</span>
-			<form onSubmit={(e) => this.props.submitPayment(this.props.payment)}>
+			<form onSubmit={(e) => { this.props.submitPayment(this.props.payment); }}>
 				<div className={"form-group row " + (this.props.payment.cardNumberHasErrors ? 'has-error' : '')}>
 					<label className=" control-label col-md-12" htmlFor="cardNumber">Card number</label>
 					<div className="col-md-4">

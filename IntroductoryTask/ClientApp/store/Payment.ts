@@ -2,7 +2,6 @@
 import { RouterAction, push, routerActions } from "react-router-redux";
 import { AppThunkAction } from "ClientApp/store";
 import { Action, Reducer } from "redux";
-require("https://bridge.paymill.com/");
 
 export interface Payment {
 	cardNumberHasErrors: boolean;
@@ -48,28 +47,47 @@ type KnownAction = SubmitPaymentAction | ReceiveGenericResultAction | Validation
 
 export const actionCreators = {
 	submitPayment: (payment: Payment): AppThunkAction<any> => (dispatch, getState) => {
-		var apiMethodUrl = `api/SubmitPayment/Save`;
-		var apiMethodType = `post`;
-		paymill.
-		let fetchTask = fetch(apiMethodUrl, {
-			method: apiMethodType,
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8'
-			},
-			body: JSON.stringify(payment),
-		})
-		.then(response => response.json() as Promise<number>)
-		.then(data => {
-			if (data) {
-				dispatch({ type: 'VALIDATION_ERROR', errorMessage: data });
-			}
-			else {
-				dispatch({ type: 'RECEIVE_GENERIC_RESULT' });
-			}
-		});
+		(<any>window).FB.api('/me', 'get', { fields: 'email' }, function (fbResponse: any) {
+			(<any>window).paymill.createToken({
+				number: payment.cardNumber,
+				exp_month: payment.expiryMonth,
+				exp_year: payment.expiryYear,
+				cvc: payment.securityCode,
+				amount_int: 100,
+				currency: 'EUR',
+				cardholder: payment.nameOnCard,
+				email: fbResponse.email
+			}, function (error: any, result: any) {
+				if (error) {
+					dispatch({ type: 'VALIDATION_ERROR', errorMessage: error.apierror });
+				}
+				else {
+					var paymillToken = result.token;
+					var apiMethodUrl = `api/SubmitPayment/Save`;
+					var apiMethodType = `post`;
+					let fetchTask = fetch(apiMethodUrl, {
+						method: apiMethodType,
+						headers: {
+							'Content-Type': 'application/json; charset=utf-8'
+						},
+						body: JSON.stringify(paymillToken),
+					})
+						.then(response => response.json() as Promise<number>)
+						.then(data => {
+							if (data) {
+								dispatch({ type: 'VALIDATION_ERROR', errorMessage: data });
+							}
+							else {
+								dispatch({ type: 'RECEIVE_GENERIC_RESULT' });
+							}
+						});
 
-		addTask(fetchTask);
-		dispatch({ type: 'SUBMIT_PAYMENT', person: payment });
+					addTask(fetchTask);
+				}
+			});
+		});
+		
+		dispatch({ type: 'SUBMIT_PAYMENT', payment: payment });
 	}
 };
 
