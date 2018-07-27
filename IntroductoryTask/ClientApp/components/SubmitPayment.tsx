@@ -113,6 +113,11 @@ class SubmitPayment extends React.Component<PaymentProps, {}> {
 		this.forceUpdate();
 	}
 
+	private onFormSubmit(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		this.props.submitPayment(this.props.payment);
+	}
+
 	public render() {
 		var cardNumberError = this.props.payment.cardNumberHasErrors
 			? <span id="card-number-error" style={{ color: "red" }}>{this.props.payment.cardNumberErrorMessage}</span>
@@ -152,39 +157,39 @@ class SubmitPayment extends React.Component<PaymentProps, {}> {
 		return <div>
 			{ successAlert }
 			<span id="form-validation-errors" style={{ color: "red" }}>{this.props.validationErrorMessage}</span>
-			<form onSubmit={(e) => { this.props.submitPayment(this.props.payment); }}>
+			<form onSubmit={(e) => this.onFormSubmit(e)}>
 				<div id="card-number" className={"form-group row " + (this.props.payment.cardNumberHasErrors ? 'has-error' : '')}>
 					<label className=" control-label col-md-12" htmlFor="cardNumber">Card number</label>
 					<div className="col-md-4">
-						<input className="form-control" type="text" name="cardNumber" defaultValue={this.props.payment.cardNumber} onChange={(e) => this.onCardNumberChange(e)} required maxLength={16} pattern="^[0-9]{16}$" />
+					<input className="form-control" type="text" name="cardNumber" value={this.props.payment.cardNumber} onChange={(e) => this.onCardNumberChange(e)} required maxLength={16} pattern="^[0-9]{16}$" />
 						{ cardNumberError }
 					</div>
 				</div>
 				<div id="name-on-card" className={"form-group row " + (this.props.payment.nameOnCardHasErrors ? 'has-error' : '')}>
 					<label className="control-label col-md-12" htmlFor="nameOnCard">Name on card</label>
 					<div className="col-md-4">
-						<input className="form-control" type="text" name="nameOnCard" defaultValue={this.props.payment.nameOnCard} onChange={(e) => this.onNameOnCardChange(e)} required maxLength={100} />
+						<input className="form-control" type="text" name="nameOnCard" value={this.props.payment.nameOnCard} onChange={(e) => this.onNameOnCardChange(e)} required maxLength={100} />
 						{ nameOnCardError }
 					</div>
 				</div>
 				<div id="expiry-month" className={"form-group row " + (this.props.payment.expiryMonthHasErrors ? 'has-error' : '')}>
 					<label className="control-label col-md-12" htmlFor="expiryMonth">Expiry month</label>
 					<div className="col-md-4">
-						<input className="form-control" type="number" name="expiryMonth" defaultValue={this.props.payment.expiryMonth} onChange={(e) => this.onExpiryMonthChange(e)} required maxLength={2} pattern="^[0-9]+$" />
+						<input className="form-control" type="number" name="expiryMonth" value={this.props.payment.expiryMonth} onChange={(e) => this.onExpiryMonthChange(e)} required maxLength={2} pattern="^[0-9]+$" />
 						{ expiryMonthError }
 					</div>
 				</div>
 				<div id="expiry-year" className={"form-group row " + (this.props.payment.expiryYearHasErrors ? 'has-error' : '')}>
 					<label className="control-label col-md-12" htmlFor="expiryYear">Expiry year</label>
 					<div className="col-md-4">
-						<input className="form-control" type="number" name="expiryYear" defaultValue={this.props.payment.expiryYear} onChange={(e) => this.onExpiryYearChange(e)} required maxLength={4} pattern="^[0-9]{4}$" />
+						<input className="form-control" type="number" name="expiryYear" value={this.props.payment.expiryYear} onChange={(e) => this.onExpiryYearChange(e)} required maxLength={4} pattern="^[0-9]{4}$" />
 						{ expiryYearError }
 					</div>
 				</div>
 				<div id="security-code" className={"form-group row " + (this.props.payment.securityCodeHasErrors ? 'has-error' : '')}>
 					<label className="control-label col-md-12" htmlFor="securityCode">Security code</label>
 					<div className="col-md-4">
-						<input className="form-control" type="text" name="securityCode" defaultValue={this.props.payment.securityCode} onChange={(e) => this.onSecurityCodeChange(e)} required maxLength={4} pattern="^[0-9]{2,4}$" />
+						<input className="form-control" type="text" name="securityCode" value={this.props.payment.securityCode} onChange={(e) => this.onSecurityCodeChange(e)} required maxLength={4} pattern="^[0-9]{2,4}$" />
 						{ securityCodeError }
 					</div>
 				</div>

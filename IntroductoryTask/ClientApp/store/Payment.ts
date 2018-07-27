@@ -33,8 +33,8 @@ interface SubmitPaymentAction {
 	payment: Payment;
 }
 
-interface ReceiveGenericResultAction {
-	type: 'RECEIVE_GENERIC_RESULT';
+interface PaymentSucceededAction {
+	type: 'PAYMENT_SUCCEEDED';
 	successMessage: string;
 }
 
@@ -43,7 +43,7 @@ interface ValidationErrorAction {
 	errorMessage: string;
 }
 
-type KnownAction = SubmitPaymentAction | ReceiveGenericResultAction | ValidationErrorAction;
+type KnownAction = SubmitPaymentAction | PaymentSucceededAction | ValidationErrorAction;
 
 export const actionCreators = {
 	submitPayment: (payment: Payment): AppThunkAction<any> => (dispatch, getState) => {
@@ -78,7 +78,7 @@ export const actionCreators = {
 								dispatch({ type: 'VALIDATION_ERROR', errorMessage: data });
 							}
 							else {
-								dispatch({ type: 'RECEIVE_GENERIC_RESULT' });
+								dispatch({ type: 'PAYMENT_SUCCEEDED' });
 							}
 						});
 
@@ -109,7 +109,7 @@ export const reducer: Reducer<PaymentState> = (state: PaymentState, incomingActi
 				isLoading: true,
 				hasPaymentSucceeded: false
 			};
-		case 'RECEIVE_GENERIC_RESULT':
+		case 'PAYMENT_SUCCEEDED':
 			return {
 				payment: emptyPayment,
 				isLoading: false,

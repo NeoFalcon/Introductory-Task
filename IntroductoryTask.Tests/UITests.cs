@@ -67,6 +67,7 @@ namespace IntroductoryTask.Tests
 			var securityCodeInput = driver.FindElement(By.CssSelector("input[name='securityCode'"));
 
 			ValidateInput(driver, payNowButton, cardNumberInput, "card-number", "card-number-error", "411111111111111", "4111111111111112");
+			ValidateInput(driver, payNowButton, cardNumberInput, "card-number", "card-number-error", "411111111111111t", "4111111111111112");
 			ValidateNullitySuccessAlert(driver, payNowButton);
 
 			ValidateInput(driver, payNowButton, nameOnCardInput, "name-on-card", "name-on-card-error", "T", "Test");
@@ -82,6 +83,7 @@ namespace IntroductoryTask.Tests
 
 			ValidateInput(driver, payNowButton, securityCodeInput, "security-code", "security-code-error", "0", "000");
 
+			expiryYearInput.Clear();
 			expiryYearInput.SendKeys(DateTime.Today.Year.ToString());
 			ValidateInput(driver, payNowButton, "expiry-month", "expiry-month-error");
 			ValidateNullitySuccessAlert(driver, payNowButton);
@@ -92,6 +94,7 @@ namespace IntroductoryTask.Tests
 			}
 			else
 			{
+				expiryYearInput.Clear();
 				expiryYearInput.SendKeys((DateTime.Today.Year + 1).ToString());
 			}
 
@@ -151,6 +154,7 @@ namespace IntroductoryTask.Tests
 			var errors = driver.FindElement(By.CssSelector($"span#{errorsId}"));
 			if (formInput != null)
 			{
+				formInput.Clear();
 				formInput.SendKeys(invalidTextValue);
 			}
 			
@@ -160,6 +164,7 @@ namespace IntroductoryTask.Tests
 
 			if (formInput != null)
 			{
+				formInput.Clear();
 				formInput.SendKeys(validTextValue);
 				Assert.DoesNotContain("has-error", formElement.GetAttribute("class"));
 				Assert.Equal(string.Empty, errors.Text);

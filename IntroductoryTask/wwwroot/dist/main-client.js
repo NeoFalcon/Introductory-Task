@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "da5b17c497bf3835900f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8ce3c3e695ca00ad592a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -2513,7 +2513,7 @@ var actionCreators = {
                             dispatch({ type: 'VALIDATION_ERROR', errorMessage: data });
                         }
                         else {
-                            dispatch({ type: 'RECEIVE_GENERIC_RESULT' });
+                            dispatch({ type: 'PAYMENT_SUCCEEDED' });
                         }
                     });
                     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_domain_task__["addTask"])(fetchTask);
@@ -2540,7 +2540,7 @@ var reducer = function (state, incomingAction) {
                 isLoading: true,
                 hasPaymentSucceeded: false
             };
-        case 'RECEIVE_GENERIC_RESULT':
+        case 'PAYMENT_SUCCEEDED':
             return {
                 payment: emptyPayment,
                 isLoading: false,
@@ -7748,6 +7748,10 @@ var SubmitPayment = (function (_super) {
         }
         this.forceUpdate();
     };
+    SubmitPayment.prototype.onFormSubmit = function (e) {
+        e.preventDefault();
+        this.props.submitPayment(this.props.payment);
+    };
     SubmitPayment.prototype.render = function () {
         var _this = this;
         var cardNumberError = this.props.payment.cardNumberHasErrors
@@ -7779,31 +7783,31 @@ var SubmitPayment = (function (_super) {
         return __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", null,
             successAlert,
             __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "form-validation-errors", style: { color: "red" } }, this.props.validationErrorMessage),
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("form", { onSubmit: function (e) { _this.props.submitPayment(_this.props.payment); } },
+            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("form", { onSubmit: function (e) { return _this.onFormSubmit(e); } },
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "card-number", className: "form-group row " + (this.props.payment.cardNumberHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: " control-label col-md-12", htmlFor: "cardNumber" }, "Card number"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
-                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "cardNumber", defaultValue: this.props.payment.cardNumber, onChange: function (e) { return _this.onCardNumberChange(e); }, required: true, maxLength: 16, pattern: "^[0-9]{16}$" }),
+                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "cardNumber", value: this.props.payment.cardNumber, onChange: function (e) { return _this.onCardNumberChange(e); }, required: true, maxLength: 16, pattern: "^[0-9]{16}$" }),
                         cardNumberError)),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "name-on-card", className: "form-group row " + (this.props.payment.nameOnCardHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: "control-label col-md-12", htmlFor: "nameOnCard" }, "Name on card"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
-                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "nameOnCard", defaultValue: this.props.payment.nameOnCard, onChange: function (e) { return _this.onNameOnCardChange(e); }, required: true, maxLength: 100 }),
+                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "nameOnCard", value: this.props.payment.nameOnCard, onChange: function (e) { return _this.onNameOnCardChange(e); }, required: true, maxLength: 100 }),
                         nameOnCardError)),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "expiry-month", className: "form-group row " + (this.props.payment.expiryMonthHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: "control-label col-md-12", htmlFor: "expiryMonth" }, "Expiry month"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
-                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "number", name: "expiryMonth", defaultValue: this.props.payment.expiryMonth, onChange: function (e) { return _this.onExpiryMonthChange(e); }, required: true, maxLength: 2, pattern: "^[0-9]+$" }),
+                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "number", name: "expiryMonth", value: this.props.payment.expiryMonth, onChange: function (e) { return _this.onExpiryMonthChange(e); }, required: true, maxLength: 2, pattern: "^[0-9]+$" }),
                         expiryMonthError)),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "expiry-year", className: "form-group row " + (this.props.payment.expiryYearHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: "control-label col-md-12", htmlFor: "expiryYear" }, "Expiry year"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
-                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "number", name: "expiryYear", defaultValue: this.props.payment.expiryYear, onChange: function (e) { return _this.onExpiryYearChange(e); }, required: true, maxLength: 4, pattern: "^[0-9]{4}$" }),
+                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "number", name: "expiryYear", value: this.props.payment.expiryYear, onChange: function (e) { return _this.onExpiryYearChange(e); }, required: true, maxLength: 4, pattern: "^[0-9]{4}$" }),
                         expiryYearError)),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "security-code", className: "form-group row " + (this.props.payment.securityCodeHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: "control-label col-md-12", htmlFor: "securityCode" }, "Security code"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
-                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "securityCode", defaultValue: this.props.payment.securityCode, onChange: function (e) { return _this.onSecurityCodeChange(e); }, required: true, maxLength: 4, pattern: "^[0-9]{2,4}$" }),
+                        __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "securityCode", value: this.props.payment.securityCode, onChange: function (e) { return _this.onSecurityCodeChange(e); }, required: true, maxLength: 4, pattern: "^[0-9]{2,4}$" }),
                         securityCodeError)),
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "form-group" },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("button", { type: "submit", className: "btn btn-default", disabled: isButtonDisabled }, "Pay now"))));
