@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -19,19 +18,11 @@ namespace IntroductoryTask
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-			// Add DbContext EF	
-			//services.AddDbContext<CodingChallengeContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-			// DI Repos
-			//services.AddScoped<ICodingChallengeRepository<Person>, CodingChallengeRepository<Person>>();
-			// DI Services
-			//services.AddTransient<IPersonService, PersonService>();
-			// AutoMapper
-			services.AddAutoMapper(cfg => cfg.AddProfile<ProjectMapperProfile>());
 			services.AddMvc();
-        }
+		}
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

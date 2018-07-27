@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "94d9c3d1ec57dcd69a9f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "da5b17c497bf3835900f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -7678,9 +7678,9 @@ var SubmitPayment = (function (_super) {
     };
     SubmitPayment.prototype.onNameOnCardChange = function (e) {
         this.props.payment.nameOnCard = e.target.value;
-        if (e.target.value.length <= 0) {
+        if (e.target.value.length < 2) {
             this.props.payment.nameOnCardHasErrors = true;
-            this.props.payment.nameOnCardErrorMessage = 'Please enter a name';
+            this.props.payment.nameOnCardErrorMessage = 'Please enter a valid name';
         }
         else {
             this.props.payment.nameOnCardHasErrors = false;
@@ -7778,7 +7778,7 @@ var SubmitPayment = (function (_super) {
             : null;
         return __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", null,
             successAlert,
-            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { style: { color: "red" } }, this.props.validationErrorMessage),
+            __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "form-validation-errors", style: { color: "red" } }, this.props.validationErrorMessage),
             __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("form", { onSubmit: function (e) { _this.props.submitPayment(_this.props.payment); } },
                 __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "card-number", className: "form-group row " + (this.props.payment.cardNumberHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: " control-label col-md-12", htmlFor: "cardNumber" }, "Card number"),

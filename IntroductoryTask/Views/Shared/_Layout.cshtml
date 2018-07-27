@@ -1,20 +1,23 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Configuration;
+@inject IConfiguration configuration
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - IntroductoryTask</title>
-    <base href="~/" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - IntroductoryTask</title>
+	<base href="~/" />
 
-    <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
 </head>
 <body>
 	<script src="https://bridge.paymill.com/"></script>
 	<script>
 		window.fbAsyncInit = function () {
 			FB.init({
-				appId: '253460525433755', // Test: 445266695882469 || Live: 253460525433755
+				appId: '@configuration.GetSection("IntroductoryTaskSettings")["FacebookApiId"]',
 				cookie: true,
 				xfbml: true,
 				version: 'v3.0'
