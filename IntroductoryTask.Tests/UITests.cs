@@ -13,6 +13,10 @@ namespace IntroductoryTask.Tests
 {
 	public class UITests
     {
+		private const string BaseUrl = @"https://introductorytask.azurewebsites.net/";
+		private const string SubmitPaymentUrl = @"https://introductorytask.azurewebsites.net/submitpayment";
+		private const int WaitTimeMiliseconds = 5000;
+
 		[Fact]
 		public void UITests_WithFirefoxDriver_ReturnsElements()
 		{
@@ -33,7 +37,7 @@ namespace IntroductoryTask.Tests
 
 		private void UITests_ReturnsElements(RemoteWebDriver driver)
 		{
-			driver.Navigate().GoToUrl(@"https://introductorytask.azurewebsites.net/");
+			driver.Navigate().GoToUrl(BaseUrl);
 			var mainWindowHandle = driver.CurrentWindowHandle;
 			var facebookButton = driver.FindElement(By.CssSelector("iframe[title='fb:login_button Facebook Social Plugin']"));
 			facebookButton.Click();
@@ -51,11 +55,11 @@ namespace IntroductoryTask.Tests
 				facebookOkButton.Click();
 			}
 			driver.SwitchTo().Window(mainWindowHandle);
-			Assert.Equal(@"https://introductorytask.azurewebsites.net/submitpayment", driver.Url);
+			Assert.Equal(SubmitPaymentUrl, driver.Url);
 
-			driver.Navigate().GoToUrl(@"https://introductorytask.azurewebsites.net/");
-			Thread.Sleep(5000);
-			Assert.Equal(@"https://introductorytask.azurewebsites.net/submitpayment", driver.Url);
+			driver.Navigate().GoToUrl(BaseUrl);
+			Thread.Sleep(WaitTimeMiliseconds);
+			Assert.Equal(SubmitPaymentUrl, driver.Url);
 
 			var payNowButton = driver.FindElement(By.CssSelector("button[type='submit']"));
 			ValidateNullitySuccessAlert(driver, payNowButton);
@@ -71,22 +75,18 @@ namespace IntroductoryTask.Tests
 			ValidateNullitySuccessAlert(driver, payNowButton);
 
 			ValidateInput(driver, payNowButton, nameOnCardInput, "name-on-card", "name-on-card-error", "T", "Test");
-			ValidateNullitySuccessAlert(driver, payNowButton);
 
 			ValidateInput(driver, payNowButton, expiryMonthInput, "expiry-month", "expiry-month-error", "0", DateTime.Today.Month.ToString());
 			ValidateInput(driver, payNowButton, expiryMonthInput, "expiry-month", "expiry-month-error", "13", DateTime.Today.Month.ToString());
-			ValidateNullitySuccessAlert(driver, payNowButton);
 
 			ValidateInput(driver, payNowButton, expiryYearInput, "expiry-year", "expiry-year-error", "2017", (DateTime.Today.Year + 1).ToString());
 			ValidateInput(driver, payNowButton, expiryYearInput, "expiry-year", "expiry-year-error", "201", (DateTime.Today.Year + 1).ToString());
-			ValidateNullitySuccessAlert(driver, payNowButton);
 
 			ValidateInput(driver, payNowButton, securityCodeInput, "security-code", "security-code-error", "0", "000");
 
 			expiryYearInput.Clear();
 			expiryYearInput.SendKeys(DateTime.Today.Year.ToString());
 			ValidateInput(driver, payNowButton, "expiry-month", "expiry-month-error");
-			ValidateNullitySuccessAlert(driver, payNowButton);
 
 			if (DateTime.Today.Month < 12)
 			{
@@ -98,15 +98,11 @@ namespace IntroductoryTask.Tests
 				expiryYearInput.SendKeys((DateTime.Today.Year + 1).ToString());
 			}
 
-			var formValidationErrors = driver.FindElement(By.CssSelector("span#form-validation-errors"));
 			ValidateNullitySuccessAlert(driver, payNowButton);
 			ValidateFormValidationErrors(driver, false);
 
+			cardNumberInput.Clear();
 			cardNumberInput.SendKeys("4111111111111111");
-			nameOnCardInput.SendKeys("Test");
-			expiryMonthInput.SendKeys("12");
-			expiryYearInput.SendKeys((DateTime.Today.Year + 1).ToString());
-			securityCodeInput.SendKeys("000");
 			ValidateNullitySuccessAlert(driver, payNowButton, true);
 			ValidateFormValidationErrors(driver, true);
 		}
@@ -132,6 +128,7 @@ namespace IntroductoryTask.Tests
 		private void ValidateNullitySuccessAlert(RemoteWebDriver driver, IWebElement payNowButton, bool doesExist)
 		{
 			payNowButton.Click();
+			Thread.Sleep(WaitTimeMiliseconds);
 			var successAlert = driver.FindElements(By.CssSelector("div.alert.alert-success.alert-dismissible"));
 			if (doesExist)
 			{
