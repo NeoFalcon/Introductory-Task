@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2bc7d75686bf24b538f7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "94d9c3d1ec57dcd69a9f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -7751,20 +7751,20 @@ var SubmitPayment = (function (_super) {
     SubmitPayment.prototype.render = function () {
         var _this = this;
         var cardNumberError = this.props.payment.cardNumberHasErrors
-            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { style: { color: "red" } }, this.props.payment.cardNumberErrorMessage)
-            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", null);
+            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "card-number-error", style: { color: "red" } }, this.props.payment.cardNumberErrorMessage)
+            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "card-number-error" });
         var nameOnCardError = this.props.payment.nameOnCardHasErrors
-            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { style: { color: "red" } }, this.props.payment.nameOnCardErrorMessage)
-            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", null);
+            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "name-on-card-error", style: { color: "red" } }, this.props.payment.nameOnCardErrorMessage)
+            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "name-on-card-error" });
         var expiryMonthError = this.props.payment.expiryMonthHasErrors
-            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { style: { color: "red" } }, this.props.payment.expiryMonthErrorMessage)
-            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", null);
+            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "expiry-month-error", style: { color: "red" } }, this.props.payment.expiryMonthErrorMessage)
+            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "expiry-month-error" });
         var expiryYearError = this.props.payment.expiryYearHasErrors
-            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { style: { color: "red" } }, this.props.payment.expiryYearErrorMessage)
-            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", null);
+            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "expiry-year-error", style: { color: "red" } }, this.props.payment.expiryYearErrorMessage)
+            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "expiry-year-error" });
         var securityCodeError = this.props.payment.securityCodeHasErrors
-            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { style: { color: "red" } }, this.props.payment.securityCodeErrorMessage)
-            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", null);
+            ? __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "security-code-error", style: { color: "red" } }, this.props.payment.securityCodeErrorMessage)
+            : __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { id: "security-code-error" });
         var isButtonDisabled = this.props.payment.cardNumberHasErrors
             || this.props.payment.nameOnCardHasErrors
             || this.props.payment.expiryMonthHasErrors
@@ -7780,27 +7780,27 @@ var SubmitPayment = (function (_super) {
             successAlert,
             __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("span", { style: { color: "red" } }, this.props.validationErrorMessage),
             __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("form", { onSubmit: function (e) { _this.props.submitPayment(_this.props.payment); } },
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "form-group row " + (this.props.payment.cardNumberHasErrors ? 'has-error' : '') },
+                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "card-number", className: "form-group row " + (this.props.payment.cardNumberHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: " control-label col-md-12", htmlFor: "cardNumber" }, "Card number"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "cardNumber", defaultValue: this.props.payment.cardNumber, onChange: function (e) { return _this.onCardNumberChange(e); }, required: true, maxLength: 16, pattern: "^[0-9]{16}$" }),
                         cardNumberError)),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "form-group row " + (this.props.payment.nameOnCardHasErrors ? 'has-error' : '') },
+                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "name-on-card", className: "form-group row " + (this.props.payment.nameOnCardHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: "control-label col-md-12", htmlFor: "nameOnCard" }, "Name on card"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "nameOnCard", defaultValue: this.props.payment.nameOnCard, onChange: function (e) { return _this.onNameOnCardChange(e); }, required: true, maxLength: 100 }),
                         nameOnCardError)),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "form-group row " + (this.props.payment.expiryMonthHasErrors ? 'has-error' : '') },
+                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "expiry-month", className: "form-group row " + (this.props.payment.expiryMonthHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: "control-label col-md-12", htmlFor: "expiryMonth" }, "Expiry month"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "number", name: "expiryMonth", defaultValue: this.props.payment.expiryMonth, onChange: function (e) { return _this.onExpiryMonthChange(e); }, required: true, maxLength: 2, pattern: "^[0-9]+$" }),
                         expiryMonthError)),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "form-group row " + (this.props.payment.expiryYearHasErrors ? 'has-error' : '') },
+                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "expiry-year", className: "form-group row " + (this.props.payment.expiryYearHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: "control-label col-md-12", htmlFor: "expiryYear" }, "Expiry year"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "number", name: "expiryYear", defaultValue: this.props.payment.expiryYear, onChange: function (e) { return _this.onExpiryYearChange(e); }, required: true, maxLength: 4, pattern: "^[0-9]{4}$" }),
                         expiryYearError)),
-                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "form-group row " + (this.props.payment.securityCodeHasErrors ? 'has-error' : '') },
+                __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { id: "security-code", className: "form-group row " + (this.props.payment.securityCodeHasErrors ? 'has-error' : '') },
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("label", { className: "control-label col-md-12", htmlFor: "securityCode" }, "Security code"),
                     __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("div", { className: "col-md-4" },
                         __WEBPACK_IMPORTED_MODULE_0_react__["createElement"]("input", { className: "form-control", type: "text", name: "securityCode", defaultValue: this.props.payment.securityCode, onChange: function (e) { return _this.onSecurityCodeChange(e); }, required: true, maxLength: 4, pattern: "^[0-9]{2,4}$" }),

@@ -1,10 +1,9 @@
 using IntroductoryTask.Controllers;
-using System;
 using Xunit;
 
 namespace IntroductoryTask.Tests
 {
-    public class SubmitPaymentTests
+	public class SubmitPaymentTests
     {
 		private readonly SubmitPaymentController _submitPaymentController;
 

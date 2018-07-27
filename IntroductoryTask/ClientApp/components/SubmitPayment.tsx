@@ -28,9 +28,9 @@ class SubmitPayment extends React.Component<PaymentProps, {}> {
 	private onNameOnCardChange(e: ChangeEvent<HTMLInputElement>) {
 		this.props.payment.nameOnCard = e.target.value;
 
-		if (e.target.value.length <= 0) {
+		if (e.target.value.length < 2) {
 			this.props.payment.nameOnCardHasErrors = true;
-			this.props.payment.nameOnCardErrorMessage = 'Please enter a name';
+			this.props.payment.nameOnCardErrorMessage = 'Please enter a valid name';
 		}
 		else {
 			this.props.payment.nameOnCardHasErrors = false;
@@ -115,24 +115,24 @@ class SubmitPayment extends React.Component<PaymentProps, {}> {
 
 	public render() {
 		var cardNumberError = this.props.payment.cardNumberHasErrors
-			? <span style={{ color: "red" }}>{this.props.payment.cardNumberErrorMessage}</span>
-			: <span></span>;
+			? <span id="card-number-error" style={{ color: "red" }}>{this.props.payment.cardNumberErrorMessage}</span>
+			: <span id="card-number-error"></span>;
 
 		var nameOnCardError = this.props.payment.nameOnCardHasErrors
-			? <span style={{ color: "red" }}>{this.props.payment.nameOnCardErrorMessage}</span>
-			: <span></span>;
+			? <span id="name-on-card-error" style={{ color: "red" }}>{this.props.payment.nameOnCardErrorMessage}</span>
+			: <span id="name-on-card-error"></span>;
 
 		var expiryMonthError = this.props.payment.expiryMonthHasErrors
-			? <span style={{ color: "red" }}>{this.props.payment.expiryMonthErrorMessage}</span>
-			: <span></span>;
+			? <span id="expiry-month-error" style={{ color: "red" }}>{this.props.payment.expiryMonthErrorMessage}</span>
+			: <span id="expiry-month-error"></span>;
 
 		var expiryYearError = this.props.payment.expiryYearHasErrors
-			? <span style={{ color: "red" }}>{this.props.payment.expiryYearErrorMessage}</span>
-			: <span></span>;
+			? <span id="expiry-year-error" style={{ color: "red" }}>{this.props.payment.expiryYearErrorMessage}</span>
+			: <span id="expiry-year-error"></span>;
 
 		var securityCodeError = this.props.payment.securityCodeHasErrors
-			? <span style={{ color: "red" }}>{this.props.payment.securityCodeErrorMessage}</span>
-			: <span></span>;
+			? <span id="security-code-error" style={{ color: "red" }}>{this.props.payment.securityCodeErrorMessage}</span>
+			: <span id="security-code-error"></span>;
 
 		var isButtonDisabled = this.props.payment.cardNumberHasErrors
 			|| this.props.payment.nameOnCardHasErrors
@@ -151,37 +151,37 @@ class SubmitPayment extends React.Component<PaymentProps, {}> {
 
 		return <div>
 			{ successAlert }
-			<span style={{ color: "red" }}>{this.props.validationErrorMessage}</span>
+			<span id="form-validation-errors" style={{ color: "red" }}>{this.props.validationErrorMessage}</span>
 			<form onSubmit={(e) => { this.props.submitPayment(this.props.payment); }}>
-				<div className={"form-group row " + (this.props.payment.cardNumberHasErrors ? 'has-error' : '')}>
+				<div id="card-number" className={"form-group row " + (this.props.payment.cardNumberHasErrors ? 'has-error' : '')}>
 					<label className=" control-label col-md-12" htmlFor="cardNumber">Card number</label>
 					<div className="col-md-4">
 						<input className="form-control" type="text" name="cardNumber" defaultValue={this.props.payment.cardNumber} onChange={(e) => this.onCardNumberChange(e)} required maxLength={16} pattern="^[0-9]{16}$" />
 						{ cardNumberError }
 					</div>
 				</div>
-				<div className={"form-group row " + (this.props.payment.nameOnCardHasErrors ? 'has-error' : '')}>
+				<div id="name-on-card" className={"form-group row " + (this.props.payment.nameOnCardHasErrors ? 'has-error' : '')}>
 					<label className="control-label col-md-12" htmlFor="nameOnCard">Name on card</label>
 					<div className="col-md-4">
 						<input className="form-control" type="text" name="nameOnCard" defaultValue={this.props.payment.nameOnCard} onChange={(e) => this.onNameOnCardChange(e)} required maxLength={100} />
 						{ nameOnCardError }
 					</div>
 				</div>
-				<div className={"form-group row " + (this.props.payment.expiryMonthHasErrors ? 'has-error' : '')}>
+				<div id="expiry-month" className={"form-group row " + (this.props.payment.expiryMonthHasErrors ? 'has-error' : '')}>
 					<label className="control-label col-md-12" htmlFor="expiryMonth">Expiry month</label>
 					<div className="col-md-4">
 						<input className="form-control" type="number" name="expiryMonth" defaultValue={this.props.payment.expiryMonth} onChange={(e) => this.onExpiryMonthChange(e)} required maxLength={2} pattern="^[0-9]+$" />
 						{ expiryMonthError }
 					</div>
 				</div>
-				<div className={"form-group row " + (this.props.payment.expiryYearHasErrors ? 'has-error' : '')}>
+				<div id="expiry-year" className={"form-group row " + (this.props.payment.expiryYearHasErrors ? 'has-error' : '')}>
 					<label className="control-label col-md-12" htmlFor="expiryYear">Expiry year</label>
 					<div className="col-md-4">
 						<input className="form-control" type="number" name="expiryYear" defaultValue={this.props.payment.expiryYear} onChange={(e) => this.onExpiryYearChange(e)} required maxLength={4} pattern="^[0-9]{4}$" />
 						{ expiryYearError }
 					</div>
 				</div>
-				<div className={"form-group row " + (this.props.payment.securityCodeHasErrors ? 'has-error' : '')}>
+				<div id="security-code" className={"form-group row " + (this.props.payment.securityCodeHasErrors ? 'has-error' : '')}>
 					<label className="control-label col-md-12" htmlFor="securityCode">Security code</label>
 					<div className="col-md-4">
 						<input className="form-control" type="text" name="securityCode" defaultValue={this.props.payment.securityCode} onChange={(e) => this.onSecurityCodeChange(e)} required maxLength={4} pattern="^[0-9]{2,4}$" />
