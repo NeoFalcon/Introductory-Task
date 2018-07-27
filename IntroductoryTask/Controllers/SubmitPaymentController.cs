@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PaymillWrapper;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,11 +16,19 @@ namespace IntroductoryTask.Controllers
         {
 			if (ModelState.IsValid)
 			{
-				var paymillContext = new PaymillContext("337e3a54ea95ca8740e3dc035ee02172");
-				var paymentService = paymillContext.PaymentService;
-				var payment = await paymentService.CreateWithTokenAsync(paymentToken);
-				
-				return string.Empty;
+				var paymentExceptionMessage = string.Empty;
+				try
+				{
+					var paymillContext = new PaymillContext("337e3a54ea95ca8740e3dc035ee02172");
+					var paymentService = paymillContext.PaymentService;
+					var payment = await paymentService.CreateWithTokenAsync(paymentToken);
+				}
+				catch (Exception exc)
+				{
+					paymentExceptionMessage = exc.Message;
+				}
+
+				return paymentExceptionMessage;
 			}
 
 			return FormatValidationErrors(ModelState.Values);
