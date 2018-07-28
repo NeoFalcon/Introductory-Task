@@ -3,4 +3,4 @@
 * Paymill:
   * User: jose@codesuit.com
   * Password: 24252425
-* Video demonstration:
+* Video demonstration: https://www.youtube.com/watch?v=NxB7_MWEIvw
